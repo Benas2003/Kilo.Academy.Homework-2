@@ -46,16 +46,6 @@ class WorkoutManager
         return Workout::whereBetween('level', $enum)->pluck('id')->toArray();
     }
 
-
-    public function getRandomWorkout(): Workout
-    {
-        $workout = Workout::inRandomOrder()->first();
-        if (! $workout) {
-            throw new RuntimeException('No workout has been found');
-        }
-        return $workout;
-    }
-
     public function getRandomVisibleWorkout(): Workout
     {
         $workout = Workout::where('is_visible', true)->inRandomOrder()->first();
@@ -155,6 +145,21 @@ class WorkoutManager
         return WorkoutPlan::where('training_plan->version', $version)
             ->where('workout_count', $score)
             ->first();
+    }
+
+    // These function should be located in Workout
+    public function getRandomWorkout(): Workout
+    {
+        $workout = $this->getRandomRecord();
+        if (! $workout) {
+            throw new RuntimeException('No workout has been found');
+        }
+        return $workout;
+    }
+
+    private function getRandomRecord(): Workout
+    {
+        return Workout::inRandomOrder()->first();
     }
 
 
