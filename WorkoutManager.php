@@ -80,11 +80,7 @@ class WorkoutManager implements check
             return $this->returnWorkoutIdByScore($this->proWorkouts);
         }
 
-        if (empty($this->walkerWorkouts)) {
-            return null;
-        }
-
-        return $this->walkerWorkouts[array_rand($this->walkerWorkouts)];
+        return $this->returnWorkoutIdByScore($this->walkerWorkouts);
     }
 
     public function getWorkoutByScore(int $score): ?Workout
